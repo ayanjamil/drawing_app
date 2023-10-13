@@ -8,6 +8,8 @@
 
     <com.example.drawingapp.drawingclass
         android:id="@+id/drawing_view"
+        android:layout_margin="5dp"
+        android:background="@drawable/background_drawing"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -15,5 +17,17 @@
 
         android:layout_width="0dp"
         android:layout_height="0dp"/>
+    <ImageButton
+        android:id="@+id/brush"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="50dp"
+        android:src="@drawable/bg1"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
