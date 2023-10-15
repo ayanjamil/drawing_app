@@ -3,18 +3,29 @@ import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.view.get
 
 class MainActivity : AppCompatActivity() {
     private var drawingclass:drawingclass?=null//initiallizing the class
+    private var mImageButtonCurrentPaint:ImageButton?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)// It specifies the UI components that
         // will be displayed on the screen.
         drawingclass=findViewById(R.id.drawing_view)
         //drawingclass?.setbrushsize(20.toFloat())// defining it for the initial cond <<redflag >> maybe
-
+        val linear_layoutpaint_colors=findViewById<LinearLayout>(R.id.ll_paint_color)
+        mImageButtonCurrentPaint=linear_layoutpaint_colors[2] as ImageButton
+        mImageButtonCurrentPaint!!.setImageDrawable(
+            ContextCompat.getDrawable(this,R.drawable.pallet_pressed)
+            // so what this part does is that it changes the colors icon to full from half when it is clicked
+        )
 
 
         val ib_brush:ImageButton=findViewById(R.id.brush)
@@ -54,6 +65,27 @@ class MainActivity : AppCompatActivity() {
         brushDialog.show()
 
     }
+    fun paint_clicked(view:View){
+        //view. This parameter is used to handle the click event for multiple buttons by assigning it as an OnClickListener to each of these buttons
+        Toast.makeText(this, "Clicked paint", Toast.LENGTH_LONG).show()
+        if(view!==mImageButtonCurrentPaint){
+            val imagebuttom = view as ImageButton
+            val colortag =imagebuttom.tag.toString()
+            drawingclass?.setcolor(colortag)
+            imagebuttom!!.setImageDrawable(
+                ContextCompat.getDrawable(this,R.drawable.pallet_pressed)
+                // so what this part does is that it changes the colors icon to full from half when it is clicked
+            )// the button we presesd should become pressed one
+            mImageButtonCurrentPaint?.setImageDrawable(
+                ContextCompat.getDrawable(this,R.drawable.pallet_normal)
+                // so what this part does is that it changes the colors icon to full from half when it is clicked
+            ) // the  unselected button should get notmal one
+            mImageButtonCurrentPaint =view
+        }
+
+    }
+
+
 }
 
 
