@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/image_2"
+            android:src="@drawable/image1"
             />
         <com.example.drawingapp.drawingclass
             android:id="@+id/drawing_view"
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/ll_paint_color"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/brush"
+        app:layout_constraintBottom_toTopOf="@id/ll_action_buttons"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fl_drawing_view_container">
@@ -110,23 +110,46 @@
 
 
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_action_buttons"
 
-
-
-
-
-    <ImageButton
-        android:id="@+id/brush"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="50dp"
-        android:src="@drawable/bg1"
-        android:scaleType="fitXY"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/ll_paint_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        >
+        <ImageButton
+            android:id="@+id/gallery"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="50dp"
+            android:src="@drawable/imagebutton"
+            android:scaleType="fitXY"
+
+            />
+        <ImageButton
+            android:id="@+id/brush"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="50dp"
+            android:src="@drawable/bg1"
+            android:scaleType="fitXY"
+
+            />
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,9 @@
 package com.example.drawingapp
+import android.Manifest
+import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
+import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,12 +12,39 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 
 class MainActivity : AppCompatActivity() {
     private var drawingclass:drawingclass?=null//initiallizing the class
     private var mImageButtonCurrentPaint:ImageButton?=null
+    val requestpermission:ActivityResultLauncher<Array<String>> =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){
+            permission ->
+            permission.entries.forEach {
+                val permissionname= it.key
+                val isgrant = it.value
+                if(isgrant){
+                    Toast.makeText(
+                        this@MainActivity,
+                        "permission granted now you can read Stoarages",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }else{
+                    if(permissionname==Manifest.permission.READ_EXTERNAL_STORAGE){
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Sorry permission is denied", // FLAG//
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            }
+        }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)// It specifies the UI components that
@@ -35,6 +66,12 @@ class MainActivity : AppCompatActivity() {
             Log.d("brushcalled","brush size change button called")
 
         }
+        val ibgallery:ImageButton=findViewById(R.id.gallery)
+        ibgallery.setOnClickListener {
+            request_storage_permission()
+
+        }
+
     }
 
 
@@ -84,6 +121,35 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+
+    private fun showRationaleDialog(
+        title: String,
+        message: String,
+    ) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+        builder.create().show()
+    }
+    private fun request_storage_permission(){
+        if(ActivityCompat.shouldShowRequestPermissionRationale(
+            this,
+            Manifest.permission.READ_EXTERNAL_STORAGE)// we needed to pass in the activity and the permission
+            ){
+            showRationaleDialog("Drawing_App","This app need to acces your location")
+        }else{
+            requestpermission.launch(arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE
+
+            ))
+        }
+
+    }
+
 
 
 }
