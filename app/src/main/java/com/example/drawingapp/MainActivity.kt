@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private var mImageButtonCurrentPaint:ImageButton?=null
     val requestpermission:ActivityResultLauncher<Array<String>> =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){
-            permission ->
+                permission ->
             permission.entries.forEach {
                 val permissionname= it.key
                 val isgrant = it.value
@@ -137,9 +137,9 @@ class MainActivity : AppCompatActivity() {
     }
     private fun request_storage_permission(){
         if(ActivityCompat.shouldShowRequestPermissionRationale(
-            this,
-            Manifest.permission.READ_EXTERNAL_STORAGE)// we needed to pass in the activity and the permission
-            ){
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)// we needed to pass in the activity and the permission
+        ){
             showRationaleDialog("Drawing_App","This app need to acces your location")
         }else{
             requestpermission.launch(arrayOf(
