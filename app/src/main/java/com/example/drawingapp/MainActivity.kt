@@ -3,13 +3,16 @@ import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Intent
 import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -22,6 +25,20 @@ import androidx.core.view.get
 class MainActivity : AppCompatActivity() {
     private var drawingclass:drawingclass?=null//initiallizing the class
     private var mImageButtonCurrentPaint:ImageButton?=null
+    val opengallerylauncher:ActivityResultLauncher<Intent> =
+    registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        result ->
+        if(result.resultCode == RESULT_OK && result.data!=null){
+            val imagebackground:ImageView =findViewById(R.id.iv_background)
+            imagebackground.setImageURI(result.data?.data)// result.data is the location and
+            // again .data gives the image
+
+
+        }
+
+
+
+    }
     val requestpermission:ActivityResultLauncher<Array<String>> =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){
                 permission ->
@@ -34,6 +51,13 @@ class MainActivity : AppCompatActivity() {
                         "permission granted now you can read Stoarages",
                         Toast.LENGTH_LONG
                     ).show()
+                    val pickintent =Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                    // this will first open the gallery as intnet is used and it pcikintent will store the url
+                    // of selected image
+                    opengallerylauncher.launch(pickintent)
+
+
+
                 }else{
                     if(permissionname==Manifest.permission.READ_EXTERNAL_STORAGE){
                         Toast.makeText(
@@ -64,6 +88,14 @@ class MainActivity : AppCompatActivity() {
 
             brushchoosrdialog()
             Log.d("brushcalled","brush size change button called")
+
+        }
+        val undo_btn:ImageButton=findViewById(R.id.undo_btn)
+        undo_btn.setOnClickListener {
+            drawingclass?.onclick_undo() //drawing clas is nullable sow e need to add ?
+
+//            brushchoosrdialog()
+//            Log.d("brushcalled","brush size change button called")
 
         }
         val ibgallery:ImageButton=findViewById(R.id.gallery)

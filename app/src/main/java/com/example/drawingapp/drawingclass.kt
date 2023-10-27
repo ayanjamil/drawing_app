@@ -19,6 +19,7 @@ class drawingclass (context: Context, attrs:AttributeSet) : View(context,attrs) 
     private var color = Color.BLACK
     private var canvas: Canvas? = null
     private val mPaths = ArrayList<CustomPath>() //git this helps in storing the curves drawn
+    private val mundoPaths = ArrayList<CustomPath>()
 
     // Paint,Canvas and Bitmap are all classes which are predifined in this
     // and to use it we have to import them
@@ -27,6 +28,13 @@ class drawingclass (context: Context, attrs:AttributeSet) : View(context,attrs) 
     // use futhure out of this class with convient
     init {
         setupDrawing()// this class was intitiallized in the main the firstfew lines
+    }
+    fun onclick_undo(){
+        if(mPaths.size>0){
+            mundoPaths.add(mPaths.removeAt(mPaths.size-1))// after removeAt that is the address in
+            invalidate()// internally call ondraw so that the path is updated
+            Log.d("undo clicked ","undo clicked")
+        }
     }
 
     private fun setupDrawing() {

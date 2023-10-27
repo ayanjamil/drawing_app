@@ -136,7 +136,16 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="50dp"
-            android:src="@drawable/bg1"
+            android:src="@drawable/brush_btn"
+            android:scaleType="fitXY"
+
+            />
+        <ImageButton
+            android:id="@+id/undo_btn"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_margin="50dp"
+            android:src="@drawable/undobtn"
             android:scaleType="fitXY"
 
             />
